@@ -3,7 +3,7 @@ using System.Security.Claims;
 
 namespace RestASPNET.Services
 {
-    interface ITokenInterface
+    interface ITokenService
     {
         string GenerateAccessToken(IEnumerable<Claim> claims);
 
