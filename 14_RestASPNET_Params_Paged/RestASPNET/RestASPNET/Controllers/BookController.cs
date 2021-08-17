@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using RestASPNET.Business;
 using RestASPNET.Data.VO;
@@ -10,74 +9,62 @@ namespace RestASPNET.Controllers
 {
     [ApiVersion("1")]
     [ApiController]
-    [Authorize("Bearer")]
     [Route("api/[controller]/v{version:apiVersion}")]
-    public class PersonController : ControllerBase
+    public class BookController : ControllerBase
     {
 
         private readonly ILogger<PersonController> _logger;
-        private IPersonBusiness _personBusiness;
+        private IBookBusiness _bookBusiness;
 
-        public PersonController(ILogger<PersonController> logger, IPersonBusiness personBusiness)
+        public BookController(ILogger<PersonController> logger, IBookBusiness bookBusiness)
         {
             _logger = logger;
-            _personBusiness = personBusiness;
+            _bookBusiness = bookBusiness;
         }
 
         [HttpGet]
-        [ProducesResponseType(200, Type = typeof(List<PersonVO>))]
+        [ProducesResponseType(200, Type = typeof(List<BookVO>))]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Get()
         {
-            return Ok(_personBusiness.FindAll());
+            return Ok(_bookBusiness.FindAll());
         }
 
         [HttpGet("{id}")]
-        [ProducesResponseType(200, Type = typeof(PersonVO))]
+        [ProducesResponseType(200, Type = typeof(BookVO))]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Get(long id)
         {
-            var person = _personBusiness.FindById(id);
-            return (person == null) ? NotFound() : Ok(person);
+            var book = _bookBusiness.FindById(id);
+            return (book == null) ? NotFound() : Ok(book);
         }
 
         [HttpPost]
-        [ProducesResponseType(200, Type = typeof(PersonVO))]
+        [ProducesResponseType(200, Type = typeof(BookVO))]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
         [TypeFilter(typeof(HyperMediaFilter))]
-        public IActionResult Post([FromBody] PersonVO person)
+        public IActionResult Post([FromBody] BookVO book)
         {
-            var createdPerson = _personBusiness.Create(person);
+            var createdPerson = _bookBusiness.Create(book);
             return (createdPerson == null) ? BadRequest() : Ok(createdPerson);
         }
 
         [HttpPut]
-        [ProducesResponseType(200, Type = typeof(PersonVO))]
+        [ProducesResponseType(200, Type = typeof(BookVO))]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
         [TypeFilter(typeof(HyperMediaFilter))]
-        public IActionResult Put([FromBody] PersonVO person)
+        public IActionResult Put([FromBody] BookVO book)
         {
-            var UpdatedPerson = _personBusiness.Update(person);
+            var UpdatedPerson = _bookBusiness.Update(book);
             return (UpdatedPerson == null) ? BadRequest() : Ok(UpdatedPerson);
-        }
-
-        [HttpPatch("{id}")]
-        [ProducesResponseType(200, Type = typeof(List<PersonVO>))]
-        [ProducesResponseType(204)]
-        [ProducesResponseType(400)]
-        [ProducesResponseType(401)]
-        [TypeFilter(typeof(HyperMediaFilter))]
-        public IActionResult Patch(long id)
-        {
-            return Ok(_personBusiness.Disable(id));
         }
 
         [HttpDelete("{id}")]
@@ -86,7 +73,7 @@ namespace RestASPNET.Controllers
         [ProducesResponseType(401)]
         public IActionResult Delete(long id)
         {
-            return _personBusiness.Delete(id) ? Ok() : NotFound();
+            return _bookBusiness.Delete(id) ? Ok() : NotFound();
             
         }
     }
