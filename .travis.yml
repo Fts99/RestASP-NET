@@ -12,13 +12,15 @@ script:
 before_deploy:
   - echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
 deploy:
-  provide: script
+  provider: script
   script:
     docker tag rest-asp-net:latest $DOCKER_USERNAME/rest-asp-net:$TRAVIS_JOB_ID;
     docker tag rest-asp-net-db:latest $DOCKER_USERNAME/rest-asp-net-db:$TRAVIS_JOB_ID;
     docker push $DOCKER_USERNAME/rest-asp-net:$TRAVIS_JOB_ID;
     docker push $DOCKER_USERNAME/rest-asp-net-db:$TRAVIS_JOB_ID;
   on:
-    branch: master
+    branches:
+      only:
+        - master
 notifications:
   email:false
