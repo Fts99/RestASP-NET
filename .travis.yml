@@ -19,8 +19,6 @@ deploy:
     docker push $DOCKER_USERNAME/rest-asp-net:$TRAVIS_JOB_ID;
     docker push $DOCKER_USERNAME/rest-asp-net-db:$TRAVIS_JOB_ID;
   on:
-    branch:
-      only:
-        - master
+    all_branches: true
 notifications:
   email:false
