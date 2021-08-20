@@ -95,10 +95,10 @@ namespace RestASPNET
             var connection = Configuration["MySQLConnection:ConnectionString"];
             services.AddDbContext<MySQLContext>(options => options.UseMySql(connection));
 
-            if (Environment.IsDevelopment())
-            {
-                MiggrateDatabae(connection);
-            }
+            //if (Environment.IsDevelopment())
+            //{
+            //    MiggrateDatabae(connection);
+            //}
 
             services.AddMvc(options =>
             {
