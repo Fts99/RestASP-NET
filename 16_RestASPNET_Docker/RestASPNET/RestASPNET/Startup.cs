@@ -122,7 +122,7 @@ namespace RestASPNET
                 c.SwaggerDoc("v1",
                     new OpenApiInfo
                     {
-                        Title = "REST API with .Net Core 5",
+                        Title = "REST API with .Net Core 5 - FOO BAR",
                         Version = "v1",
                         Description = "API REST developed in course 'REST API's from 0 to Azure with ASP.NET Core 5'",
                         Contact = new OpenApiContact
