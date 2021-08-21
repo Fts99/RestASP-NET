@@ -19,7 +19,7 @@ jobs:
           login-server: ${{ secrets.DOCKER_CONTAINER_REGISTRY }}
     
       - name: Build Images
-        working-directory: ./17_RestASPNET_CI_GithubAction_Azure\RestASPNET
+        working-directory: ./17_RestASPNET_CI_GithubAction_Azure/RestASPNET
         run: docker-compose build
       
       - name: Push to Azure Container registry
