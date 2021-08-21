@@ -18,11 +18,6 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           login-server: ${{ secrets.DOCKER_CONTAINER_REGISTRY }}
     
-      - name: Update Docker
-        run: 
-          pip3 install --upgrade --force-reinstall --no-cache-dir docker-compose && ln -sf 
-          /usr/local/bin/docker-compose /usr/bin/docker-compose
-    
       - name: Build Images
         working-directory: ./17_RestASPNET_CI_GithubAction_Azure/RestASPNET
         run: docker-compose build
