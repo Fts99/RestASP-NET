@@ -1,0 +1,40 @@
+name: CI with GitHub Actions
+
+on: [push]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+        - uses: actions/checkout@v2
+    
+        - name: Docker login - Azure Container Registry
+          uses: Azure/docker-login@v1
+          with:
+            username: ${{ secrets.DOCKER_USERNAME }}
+            password: ${{ secrets.DOCKER_PASSWORD }}
+            login-server: ${{ secrets.DOCKER_CONTAINER_REGISTRY }}
+        
+        - name: Build images
+          working-directory: ./17_RestASPNET_CI_GithubAction_Azure\RestASPNET
+          run: docker-compose build
+          
+        - name: Push to azure container registry
+          run: 
+            docker tag ${{ secrets.IMAGE_NAME }}:latest ${{ secrets.CONTAINER_REGISTRY }}/${{ secrets.IMAGE_NAME }}:${{ github.run_id }}
+            docker push ${{ secrets.CONTAINER_REGISTRY }}/${{ secrets.IMAGE_NAME }}:${{ github.run_id }}
+        
+        - name: Login in Azure
+          uses: azure/login@v1
+          with:
+            creds: ${{ secrets.AZURE_CREDENTIALS }}
+            
+        - name: Azure WebApp Container - Deploy
+          uses: azure/webapps-deploy@v2
+          with:
+            app-name: ts-api-server
+            iamges: ${{ secrets.CONTAINER_REGISTRY }}/${{ secrets.IMAGE_NAME }}:${{ github.run_id }}
+              
