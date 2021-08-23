@@ -1,0 +1,2 @@
+ALTER TABLE person
+	ALTER COLUMN gender VARCHAR(50);
