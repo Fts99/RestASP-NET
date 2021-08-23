@@ -20,7 +20,7 @@ jobs:
     
       - name: Build Images
         working-directory: ./17_RestASPNET_CI_GithubAction_Azure/RestASPNET
-        run: docker-compose up -d --build
+        run: docker-compose build
       
       - name: Push to Azure Container registry
         run: |
