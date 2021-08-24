@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using RestASPNET.Business;
 using RestASPNET.Data.VO;
@@ -61,6 +62,7 @@ namespace RestASPNET.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
         [TypeFilter(typeof(HyperMediaFilter))]
+        [Authorize("Bearer")]
         public IActionResult Put([FromBody] BookVO book)
         {
             var UpdatedPerson = _bookBusiness.Update(book);
@@ -71,6 +73,7 @@ namespace RestASPNET.Controllers
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(401)]
+        [Authorize("Bearer")]
         public IActionResult Delete(long id)
         {
             return _bookBusiness.Delete(id) ? Ok() : NotFound();

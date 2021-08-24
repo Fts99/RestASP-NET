@@ -23,12 +23,12 @@ namespace RestASPNET.Controllers
         public IActionResult Signin([FromBody] UserVO user)
         {
             if (user == null)
-                BadRequest("Invalid client request");
+                return BadRequest("Invalid client request");
 
             var token = _loginBusiness.ValidateCredentials(user);
 
             if (token == null)
-                Unauthorized();
+                return Unauthorized();
 
             return Ok(token);
         }
